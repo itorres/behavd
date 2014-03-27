@@ -11,5 +11,7 @@
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 
 @property (assign) IBOutlet NSWindow *window;
-
+@property (assign) IBOutlet NSMenu *statusMenu;
+@property (strong) NSStatusItem *statusItem;
+-(IBAction)optionAbout:(id)sender;
 @end
