@@ -2,16 +2,21 @@
 //  AppDelegate.m
 //  behavd
 //
-//  Created by Ignacio Torres Masdeu on 27/03/14.
-//  Copyright (c) 2014 Ignacio Torres. All rights reserved.
+//  This software is licensed under the Apache 2 license, quoted below.
 //
-// The Android robot is reproduced or modified from work created
-// and shared by Google and used according to terms described in
-// the Creative Commons 3.0 Attribution License.
+//  Copyright 2014 Ignacio Torres Masdeu <ignacio@torresmasdeu.name>
 //
+//  Licensed under the Apache License, Version 2.0 (the "License"); you may not
+//  use this file except in compliance with the License. You may obtain a copy of
+//  the License at
 //
-// Sources of inspiration:
+//  http://www.apache.org/licenses/LICENSE-2.0
 //
+//  Unless required by applicable law or agreed to in writing, software
+//  distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+//  WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+//  License for the specific language governing permissions and limitations under
+//  the License.
 //
 
 #import "AppDelegate.h"
@@ -31,13 +36,13 @@
 {
     // Insert code here to initialize your application
     [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
-                                                           selector:@selector(appDidActivate:)
-                                                               name:NSWorkspaceDidActivateApplicationNotification
-                                                             object:nil];
+                   selector:@selector(appDidActivate:)
+                   name:NSWorkspaceDidActivateApplicationNotification
+                   object:nil];
     [[[NSWorkspace sharedWorkspace] notificationCenter] addObserver:self
-                                                           selector:@selector(appDidDeActivate:)
-                                                               name:NSWorkspaceDidDeactivateApplicationNotification
-                                                             object:nil];
+                   selector:@selector(appDidDeActivate:)
+                   name:NSWorkspaceDidDeactivateApplicationNotification
+                   object:nil];
     
     
 }
@@ -103,10 +108,9 @@ int lsfd(pid_t pid) {
 
 - (void)appDidDeActivate:(NSNotification *)notification {
     pid_t ret = [self isEmulator:notification];
-    if (ret>0) {
+    if (ret>0 && self.activated) {
         NSLog(@"Desactivando Emulator");
         kill(ret, SIGSTOP);
-        [self changeMenu:@"🌚"];
     }
 }
 
@@ -115,7 +119,6 @@ int lsfd(pid_t pid) {
     if (ret>0) {
         NSLog(@"Activando Emulator");
         kill(ret, SIGCONT);
-        [self changeMenu:@"🌝"];
     }
 }
 
@@ -125,18 +128,38 @@ int lsfd(pid_t pid) {
     [self.statusItem setTitle:emoji];
 }
 
--(void)awakeFromNib{
+-(void)awakeFromNib {
+    self.activated = true;
     self.statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
     [self.statusItem setMenu:self.statusMenu];
-    [self.statusItem setTitle:@"🌚"]; // 🌝
+    NSLog(@"Monitoring: %d", self.activated);
+    [self.statusItem setTitle: self.activated? @"🌝":@"🌚"];
     [self.statusItem setHighlightMode:YES];
+    NSApplication *app = [NSApplication sharedApplication];
+    [app activateIgnoringOtherApps:YES];
+    [NSApp orderFrontStandardAboutPanel:nil];
 }
 
--(IBAction)optionAbout:(id)sender{
+-(IBAction)optionAbout:(id)sender {
     NSApplication *app = [NSApplication sharedApplication];
     [app activateIgnoringOtherApps:YES];
     [NSApp orderFrontStandardAboutPanel:sender];
+    NSLog(@"Monitoring: %d", self.activated);
+    
+}
 
+-(IBAction)toggleMonitor:(id)sender {
+    self.activated = !self.activated;
+    NSLog(@"Monitor: %@", self.activated?@"activated":@"deactivated");
+    [self.statusItem setTitle: self.activated? @"🌝":@"🌚"];
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem {
+    SEL action = menuItem.action;
+    if (action == @selector(toggleMonitor:)) {
+        [menuItem setTitle:(self.activated ? @"Deactivate" :@"Activate")];
+    }
+    return YES;
 }
 
 @end

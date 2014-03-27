@@ -674,8 +674,11 @@
                         <action selector="optionAbout:" target="-1" id="VBj-lG-p0c"/>
                     </connections>
                 </menuItem>
-                <menuItem title="🍺 Buy me a beer!" id="bDU-Lf-MNb">
+                <menuItem title="Deactivate" id="bDU-Lf-MNb">
                     <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="toggleMonitor:" target="-1" id="qj7-uT-fQE"/>
+                    </connections>
                 </menuItem>
                 <menuItem title="Quit" id="zUe-zc-wU4">
                     <modifierMask key="keyEquivalentModifierMask"/>
