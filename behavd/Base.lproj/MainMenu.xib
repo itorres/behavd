@@ -668,16 +668,17 @@
         </menu>
         <menu id="Jkl-Gc-bVX">
             <items>
-                <menuItem title="About" id="Ksh-qZ-Aml">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                    <connections>
-                        <action selector="optionAbout:" target="-1" id="VBj-lG-p0c"/>
-                    </connections>
-                </menuItem>
                 <menuItem title="Deactivate" id="bDU-Lf-MNb">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="toggleMonitor:" target="-1" id="qj7-uT-fQE"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="eVU-vl-CJT"/>
+                <menuItem title="About" id="Ksh-qZ-Aml">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="optionAbout:" target="-1" id="VBj-lG-p0c"/>
                     </connections>
                 </menuItem>
                 <menuItem title="Quit" id="zUe-zc-wU4">

@@ -116,7 +116,7 @@ int lsfd(pid_t pid) {
 
 - (void)appDidActivate:(NSNotification *)notification {
     pid_t ret = [self isEmulator:notification];
-    if (ret>0) {
+    if (ret>0 && self.activated) {
         NSLog(@"Activando Emulator");
         kill(ret, SIGCONT);
     }
