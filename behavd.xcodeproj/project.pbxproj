@@ -466,6 +466,7 @@
 				47057F6518E4032D00856E53 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		47057F6618E4032D00856E53 /* Build configuration list for PBXNativeTarget "behavdTests" */ = {
 			isa = XCConfigurationList;
@@ -474,6 +475,7 @@
 				47057F6818E4032D00856E53 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
