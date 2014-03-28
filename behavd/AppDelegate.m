@@ -97,10 +97,11 @@ int lsfd(pid_t pid) {
     NSRunningApplication *app = [userInfo objectForKey:@"NSWorkspaceApplicationKey"];
     NSString *appPath = [[app executableURL] absoluteString];
     
-    if ([appPath rangeOfString:@"android-sdk"].location != NSNotFound &&
+    if (( [appPath rangeOfString:@"android-sdk"].location != NSNotFound
+         || [appPath rangeOfString:@"sdk/tools"].location != NSNotFound
+         ) &&
         ( [appPath rangeOfString:@"tools/emulator64-"].location != NSNotFound
          ||[appPath rangeOfString:@"tools/emulator-"].location != NSNotFound ) ) {
-            
             return [app processIdentifier];
         }
     return 0;
